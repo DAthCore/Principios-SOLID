@@ -1,8 +1,9 @@
 ﻿using OpenClose;
 
 CalculateSalaryMonthly(new List<object>() {
-    new EmployeeFullTime("Pepito Pérez", 160),
-    new EmployeePartTime("Manuel Lopera", 180)
+    new EmployeeFullTime("Pepito Pérez", 160, 30000M),
+    new EmployeePartTime("Manuel Lopera", 180, 20000M),
+    new EmployeeContractor("José Molina", 120, 10000M)
 });
 
 
@@ -12,22 +13,21 @@ void CalculateSalaryMonthly(List<object> employees)
     {
         if (employee is EmployeeFullTime) 
         {
-            decimal hourValue = 30000M;
-            EmployeeFullTime employeeFullTime = ((EmployeeFullTime)employee);
-            decimal salary = hourValue * employeeFullTime.HoursWorked;
+            EmployeeFullTime employeeFullTime = (EmployeeFullTime)employee;
+            decimal salary = employeeFullTime.GetSalary();
             Console.WriteLine($"Empleado: {employeeFullTime.Fullname}, Pago: {salary:C1} ");
+        }
+        else if (employee is EmployeePartTime)
+        {
+            EmployeePartTime employeePartTime = (EmployeePartTime)employee;
+            decimal salary = employeePartTime.GetSalary();
+            Console.WriteLine($"Empleado: {employeePartTime.Fullname}, Pago: {salary:C1} ");
         }
         else 
         {
-            decimal hourValue = 20000M;
-            EmployeePartTime employeePartTime = ((EmployeePartTime)employee);
-            decimal salary = hourValue * employeePartTime.HoursWorked;
-            if (employeePartTime.HoursWorked > 160) {
-                decimal effortCompensation = 5000M;
-                int extraDays = employeePartTime.HoursWorked - 160;
-                salary += effortCompensation * extraDays;
-            }
-            Console.WriteLine($"Empleado: {employeePartTime.Fullname}, Pago: {salary:C1} ");
+            EmployeeContractor employeeContractor = (EmployeeContractor)employee;
+            decimal salary = employeeContractor.GetSalary();
+            Console.WriteLine($"Empleado: {employeeContractor.Fullname}, Pago: {salary:C1} ");
         }
     }
 

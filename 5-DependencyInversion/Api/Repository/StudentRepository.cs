@@ -2,24 +2,21 @@ using System.Collections.ObjectModel;
 
 namespace DependencyInversion
 {
-    public class StudentRepository
+    public class StudentRepository : IStudentRepository
     {
-        private static ObservableCollection<Student> collection;
+        private readonly ObservableCollection<Student> collection;
 
         public StudentRepository()
         {
+            collection = new();
             InitData();
         }
 
         private void InitData()
         {
-            if (collection == null) 
-            {
-                collection = new();
                 collection.Add(new Student(1, "Pepito Pérez", new List<double>() { 3, 4.5 }));
                 collection.Add(new Student(2, "Mariana Lopera", new List<double>() { 4, 5 }));
                 collection.Add(new Student(3, "José Molina", new List<double>() { 2, 3 }));
-            }
         }
 
         public IEnumerable<Student> GetAll()
